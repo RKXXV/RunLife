@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная - RunLife</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons via CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Roboto Condensed Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .font-roboto-condensed {
+            font-family: 'Roboto Condensed', sans-serif;
+        }
+        .font-inter {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        * {
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #1E3A8A, #3B82F6);
+            color: white;
+            font-weight: 600;
+            padding: 12px 32px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1E40AF, #2563EB);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(30, 58, 138, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #1E3A8A;
+            border: 2px solid #1E3A8A;
+            font-weight: 600;
+            padding: 12px 32px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .dark .btn-secondary {
+            color: white;
+            border-color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #1E3A8A;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .dark .btn-secondary:hover {
+            background: white;
+            color: #1E3A8A;
+        }
+        
+        .race-card {
+            transition: all 0.3s;
+        }
+        
+        .race-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .section-padding {
+            padding: 80px 0;
+        }
+        
+        .dark .bg-gray-50 {
+            background-color: #111827;
+        }
+        
+        .dark .bg-gray-100 {
+            background-color: #1F2937;
+        }
+        
+        .dark .bg-white {
+            background-color: #1F2937;
+        }
+        
+        .dark .border-gray-200 {
+            border-color: #374151;
+        }
+        
+        .dark .text-gray-600 {
+            color: #D1D5DB;
+        }
+        
+        .dark .text-gray-800 {
+            color: #F9FAFB;
+        }
+        
+        /* Стили для модальных окон */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .dark .modal-content {
+            background: #1F2937;
+            color: white;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <!-- Навигация -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <i class="fas fa-running text-3xl text-blue-600 dark:text-blue-400"></i>
+                <span class="text-2xl font-roboto-condensed text-gray-800 dark:text-white">RunLife</span>
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#races" class="font-inter text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Каталог забегов</a>
+                <a href="#volunteer" class="font-inter text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Волонтёрам</a>
+                <a href="#about" class="font-inter text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">О нас</a>
+                <a href="#contacts" class="font-inter text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Контакты</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="/pages/login.html" class="font-inter text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Вход</a>
+                <a href="/pages/register.html" class="btn-primary">Регистрация</a>
+                <!-- Кнопка переключения темы -->
+                <button id="themeToggle" class="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors" aria-label="Переключить тему">
+                    <i class="fas fa-sun" id="themeIcon"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Герой секция -->
+    <section class="hero-gradient text-white">
+        <div class="container mx-auto px-6 py-20">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-5xl md:text-6xl font-roboto-condensed font-bold mb-6">
+                    Беги к своим целям с <span class="text-yellow-300">RunLife</span>
+                </h1>
+                <p class="text-xl md:text-2xl font-inter mb-8 opacity-90">
+                    Регистрируйся на забеги, отслеживай прогресс и становись частью бегового сообщества
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#races" class="btn-primary text-lg py-4 px-8">
+                        <i class="fas fa-search mr-2"></i> Найти забег
+                    </a>
+                    <a href="register.html" class="btn-secondary text-lg py-4 px-8 bg-white bg-opacity-10 border-white text-white hover:bg-white hover:bg-opacity-20">
+                        <i class="fas fa-user-plus mr-2"></i> Присоединиться
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Каталог забегов -->
+    <section id="races" class="section-padding bg-white dark:bg-gray-800">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-roboto-condensed text-center text-gray-800 dark:text-white mb-4">
+                Каталог забегов
+            </h2>
+            <p class="text-lg font-inter text-center text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto">
+                Выберите подходящий забег из нашего каталога и зарегистрируйтесь онлайн
+            </p>
+            
+            <!-- Фильтры забегов -->
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <button class="px-4 py-2 bg-blue-600 text-white rounded-lg font-inter filter-btn active" data-filter="all">Все</button>
+                <button class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-inter hover:bg-gray-300 dark:hover:bg-gray-600 filter-btn" data-filter="upcoming">Ближайшие</button>
+                <button class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-inter hover:bg-gray-300 dark:hover:bg-gray-600 filter-btn" data-filter="marathon">Марафоны</button>
+                <button class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-inter hover:bg-gray-300 dark:hover:bg-gray-600 filter-btn" data-filter="half">Полумарафоны</button>
+                <button class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-inter hover:bg-gray-300 dark:hover:bg-gray-600 filter-btn" data-filter="10km">10 км</button>
+                <button class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-inter hover:bg-gray-300 dark:hover:bg-gray-600 filter-btn" data-filter="5km">5 км</button>
+            </div>
+            
+            <!-- Сетка забегов -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="races-container">
+                <!-- Забег 1 -->
+                <div class="race-card bg-gray-50 dark:bg-gray-700 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-600" data-category="marathon upcoming">
+                    <div class="h-48 bg-gradient-to-r from-blue-500 to-indigo-600 relative">
+                        <span class="absolute top-4 right-4 bg-white text-blue-600 font-bold py-1 px-3 rounded-full text-sm">15 сентября</span>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <span class="bg-black bg-opacity-50 py-1 px-2 rounded text-sm">Москва</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-roboto-condensed text-gray-800 dark:text-white mb-2">Московский марафон</h3>
+                        <p class="font-inter text-gray-600 dark:text-gray-300 mb-4">Легендарный марафон по центру Москвы с тысячами участников</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="font-inter text-sm text-gray-500 dark:text-gray-400">Дистанции:</span>
+                                <span class="font-inter text-sm text-gray-700 dark:text-gray-300 ml-2">5км, 10км, 42км</span>
+                            </div>
+                            <span class="font-roboto-condensed text-lg text-blue-600 dark:text-blue-400 font-bold">2 500 ₽</span>
+                        </div>
+                        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-inter py-2 rounded-lg transition-colors register-btn" data-race="Московский марафон">
+                            Зарегистрироваться
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Забег 2 -->
+                <div class="race-card bg-gray-50 dark:bg-gray-700 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-600" data-category="half upcoming 10km 5km">
+                    <div class="h-48 bg-gradient-to-r from-green-500 to-teal-600 relative">
+                        <span class="absolute top-4 right-4 bg-white text-green-600 font-bold py-1 px-3 rounded-full text-sm">22 октября</span>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <span class="bg-black bg-opacity-50 py-1 px-2 rounded text-sm">Санкт-Петербург</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-roboto-condensed text-gray-800 dark:text-white mb-2">Невский полумарафон</h3>
+                        <p class="font-inter text-gray-600 dark:text-gray-300 mb-4">Живописная трасса вдоль набережных Невы</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="font-inter text-sm text-gray-500 dark:text-gray-400">Дистанции:</span>
+                                <span class="font-inter text-sm text-gray-700 dark:text-gray-300 ml-2">5км, 10км, 21км</span>
+                            </div>
+                            <span class="font-roboto-condensed text-lg text-green-600 dark:text-green-400 font-bold">1 800 ₽</span>
+                        </div>
+                        <button class="w-full bg-green-600 hover:bg-green-700 text-white font-inter py-2 rounded-lg transition-colors register-btn" data-race="Невский полумарафон">
+                            Зарегистрироваться
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Забег 3 -->
+                <div class="race-card bg-gray-50 dark:bg-gray-700 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-600" data-category="10km 5km">
+                    <div class="h-48 bg-gradient-to-r from-purple-500 to-pink-600 relative">
+                        <span class="absolute top-4 right-4 bg-white text-purple-600 font-bold py-1 px-3 rounded-full text-sm">5 ноября</span>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <span class="bg-black bg-opacity-50 py-1 px-2 rounded text-sm">Онлайн</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-roboto-condensed text-gray-800 dark:text-white mb-2">Осенний виртуальный забег</h3>
+                        <p class="font-inter text-gray-600 dark:text-gray-300 mb-4">Участвуйте из любого города и получите медаль финишера</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="font-inter text-sm text-gray-500 dark:text-gray-400">Дистанции:</span>
+                                <span class="font-inter text-sm text-gray-700 dark:text-gray-300 ml-2">5км, 10км, 21км</span>
+                            </div>
+                            <span class="font-roboto-condensed text-lg text-purple-600 dark:text-purple-400 font-bold">1 200 ₽</span>
+                        </div>
+                        <button class="w-full bg-purple-600 hover:bg-purple-700 text-white font-inter py-2 rounded-lg transition-colors register-btn" data-race="Осенний виртуальный забег">
+                            Зарегистрироваться
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <button class="btn-primary" id="showAllRaces">
+                    <i class="fas fa-list mr-2"></i> Показать все забеги
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Волонтёрский раздел -->
+    <section id="volunteer" class="section-padding bg-gray-100 dark:bg-gray-700">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-roboto-condensed text-center text-gray-800 dark:text-white mb-4">
+                Волонтёрам
+            </h2>
+            <p class="text-lg font-inter text-center text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto">
+                Станьте частью нашей команды и помогите сделать забеги незабываемыми для всех участников
+            </p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h3 class="text-2xl font-roboto-condensed text-gray-800 dark:text-white mb-6">Почему становятся волонтёрами?</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fas fa-heart text-blue-600 dark:text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-roboto-condensed text-gray-800 dark:text-white mb-2">Помощь сообществу</h4>
+                                <p class="font-inter text-gray-600 dark:text-gray-300">Внесите свой вклад в развитие бегового движения и помогите участникам достичь их целей.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fas fa-award text-green-600 dark:text-green-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-roboto-condensed text-gray-800 dark:text-white mb-2">Уникальный опыт</h4>
+                                <p class="font-inter text-gray-600 dark:text-gray-300">Получите незабываемые впечатления и опыт организации масштабных мероприятий.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fas fa-users text-purple-600 dark:text-purple-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-roboto-condensed text-gray-800 dark:text-white mb-2">Новые знакомства</h4>
+                                <p class="font-inter text-gray-600 dark:text-gray-300">Познакомьтесь с единомышленниками и станьте частью дружного сообщества.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <button class="btn-primary" id="volunteerApplyBtn">
+                            <i class="fas fa-hands-helping mr-2"></i> Стать волонтёром
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-8 border border-gray-200 dark:border-gray-600">
+                    <h3 class="text-2xl font-roboto-condensed text-gray-800 dark:text-white mb-6">Вакансии для волонтёров</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
+                            <h4 class="font-roboto-condensed text-lg text-gray-800 dark:text-white mb-2">Регистрация участников</h4>
+                            <p class="font-inter text-gray-600 dark:text-gray-300 text-sm mb-2">Помощь на стойках регистрации перед забегом</p>
+                            <div class="flex justify-between items-center">
+                                <span class="font-inter text-sm text-blue-600 dark:text-blue-400">Москва • 15 сентября</span>
+                                <span class="font-inter text-sm bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded">5 мест</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
+                            <h4 class="font-roboto-condensed text-lg text-gray-800 dark:text-white mb-2">Пункты питания</h4>
+                            <p class="font-inter text-gray-600 dark:text-gray-300 text-sm mb-2">Раздача воды и питания на трассе</p>
+                            <div class="flex justify-between items-center">
+                                <span class="font-inter text-sm text-blue-600 dark:text-blue-400">Санкт-Петербург • 22 октября</span>
+                                <span class="font-inter text-sm bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 px-2 py-1 rounded">3 места</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
+                            <h4 class="font-roboto-condensed text-lg text-gray-800 dark:text-white mb-2">Финишная зона</h4>
+                            <p class="font-inter text-gray-600 dark:text-gray-300 text-sm mb-2">Вручение медалей и помощь финишерам</p>
+                            <div class="flex justify-between items-center">
+                                <span class="font-inter text-sm text-blue-600 dark:text-blue-400">Онлайн • 5 ноября</span>
+                                <span class="font-inter text-sm bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded">8 мест</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- О нас -->
+    <section id="about" class="section-padding bg-white dark:bg-gray-800">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-roboto-condensed text-center text-gray-800 dark:text-white mb-4">
+                О нас
+            </h2>
+            <p class="text-lg font-inter text-center text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto">
+                RunLife - это больше чем платформа для регистрации на забеги. Это сообщество единомышленников.
+            </p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h3 class="text-2xl font-roboto-condensed text-gray-800 dark:text-white mb-6">Наша миссия</h3>
+                    <p class="font-inter text-gray-600 dark:text-gray-300 mb-4">
+                        Мы создаем возможности для людей вести активный образ жизни, преодолевать себя и достигать новых целей. 
+                        Наша платформа объединяет организаторов забегов, участников и волонтеров в одном месте.
+                    </p>
+                    <p class="font-inter text-gray-600 dark:text-gray-300 mb-6">
+                        С 2018 года мы помогли более 50 000 бегунов принять участие в забегах по всей России и за ее пределами. 
+
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-blue-600 dark:text-blue-400">50,000+</div>
+                            <p class="font-inter text-gray-600 dark:text-gray-300 mt-1">Участников</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-green-600 dark:text-green-400">300+</div>
+                            <p class="font-inter text-gray-600 dark:text-gray-300 mt-1">Забегов</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-purple-600 dark:text-purple-400">25</div>
+                            <p class="font-inter text-gray-600 dark:text-gray-300 mt-1">Городов</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-yellow-600 dark:text-yellow-400">1,500+</div>
+                            <p class="font-inter text-gray-600 dark:text-gray-300 mt-1">Волонтёров</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-100 dark:bg-gray-700 rounded-xl p-8 border border-gray-200 dark:border-gray-600">
+                    <h3 class="text-2xl font-roboto-condensed text-gray-800 dark:text-white mb-6">Наша команда</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center">
+                            <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-user text-blue-600 dark:text-blue-400 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-roboto-condensed text-lg text-gray-800 dark:text-white">Алексей Рагозин</h4>
+                                <p class="font-inter text-gray-600 dark:text-gray-300 text-sm">Основатель и CEO</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-user text-green-600 dark:text-green-400 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-roboto-condensed text-lg text-gray-800 dark:text-white">Максим Петров</h4>
+                                <p class="font-inter text-gray-600 dark:text-gray-300 text-sm">Технический директор</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-user text-purple-600 dark:text-purple-400 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-roboto-condensed text-lg text-gray-800 dark:text-white">Григорий Маскатов</h4>
+                                <p class="font-inter text-gray-600 dark:text-gray-300 text-sm">Координатор мероприятий</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-600">
+                        <h4 class="font-roboto-condensed text-lg text-gray-800 dark:text-white mb-4">Присоединяйтесь к нашей команде</h4>
+                        <button class="btn-secondary" id="jobsBtn">
+                            <i class="fas fa-briefcase mr-2"></i> Вакансии
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Контакты -->
+    <section id="contacts" class="section-padding bg-gray-100 dark:bg-gray-700">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-roboto-condensed text-center text-gray-800 dark:text-white mb-4">
+                Контакты
+            </h2>
+            <p class="text-lg font-inter text-center text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto">
+                Свяжитесь с нами по любым вопросам, связанным с забегами, регистрацией или сотрудничеством
+            </p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-roboto-condensed text-gray-800 dark:text-white mb-6">Свяжитесь с нами</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fas fa-map-marker-alt text-blue-600 dark:text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-roboto-condensed text-lg text-gray-800 dark:text-white mb-2">Адрес</h4>
+                                <p class="font-inter text-gray-600 dark:text-gray-300">Новосибирск, ул. Беговая, д. 10</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fas fa-phone text-green-600 dark:text-green-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-roboto-condensed text-lg text-gray-800 dark:text-white mb-2">Телефон</h4>
+                                <p class="font-inter text-gray-600 dark:text-gray-300">+7 (495) 123-45-67</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fas fa-envelope text-purple-600 dark:text-purple-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-roboto-condensed text-lg text-gray-800 dark:text-white mb-2">Email</h4>
+                                <p class="font-inter text-gray-600 dark:text-gray-300">info@runlife.ru</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-yellow-100 dark:bg-yellow-900 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fas fa-clock text-yellow-600 dark:text-yellow-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-roboto-condensed text-lg text-gray-800 dark:text-white mb-2">Время работы</h4>
+                                <p class="font-inter text-gray-600 dark:text-gray-300">Пн-Пт: 9:00-18:00</p>
+                                <p class="font-inter text-gray-600 dark:text-gray-300">Сб-Вс: 10:00-16:00</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h4 class="font-roboto-condensed text-lg text-gray-800 dark:text-white mb-4">Мы в социальных сетях</h4>
+                        <div class="flex space-x-4">
+                            <a href="vk" class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white hover:bg-blue-700 transition-colors">
+                                <i class="fab fa-vk"></i>
+                            </a>
+                            <a href="instagram" class="w-10 h-10 bg-pink-600 rounded-full flex items-center justify-center text-white hover:bg-pink-700 transition-colors">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="tg" class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white hover:bg-blue-600 transition-colors">
+                                <i class="fab fa-telegram"></i>
+                            </a>
+                            <a href="github" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-white hover:bg-gray-900 transition-colors">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-8 border border-gray-200 dark:border-gray-600">
+                    <h3 class="text-2xl font-roboto-condensed text-gray-800 dark:text-white mb-6">Напишите нам</h3>
+                    
+                    <form class="space-y-4" id="contactForm">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block font-inter text-gray-700 dark:text-gray-300 mb-2 text-sm font-medium" for="contactName">Имя</label>
+                                <input type="text" id="contactName" class="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:border-blue-500 font-inter text-gray-900 dark:text-white" required>
+                            </div>
+                            <div>
+                                <label class="block font-inter text-gray-700 dark:text-gray-300 mb-2 text-sm font-medium" for="contactEmail">Email</label>
+                                <input type="email" id="contactEmail" class="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:border-blue-500 font-inter text-gray-900 dark:text-white" required>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block font-inter text-gray-700 dark:text-gray-300 mb-2 text-sm font-medium" for="contactSubject">Тема</label>
+                            <input type="text" id="contactSubject" class="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:border-blue-500 font-inter text-gray-900 dark:text-white" required>
+                        </div>
+                        
+                        <div>
+                            <label class="block font-inter text-gray-700 dark:text-gray-300 mb-2 text-sm font-medium" for="contactMessage">Сообщение</label>
+                            <textarea id="contactMessage" rows="4" class="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:border-blue-500 font-inter text-gray-900 dark:text-white" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary w-full">
+                            <i class="fas fa-paper-plane mr-2"></i> Отправить сообщение
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 dark:bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-running text-xl text-blue-400"></i>
+                        <span class="font-roboto-condensed text-lg">RunLife</span>
+                    </div>
+                    <p class="font-inter text-gray-400 text-sm">
+                        Беговое сообщество для тех, кто стремится к новым достижениям. Присоединяйтесь к нам!
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-roboto-condensed mb-4">Навигация</h4>
+                    <ul class="space-y-2 font-inter text-sm text-gray-400">
+                        <li><a href="#races" class="hover:text-white transition-colors">Каталог забегов</a></li>
+                        <li><a href="#volunteer" class="hover:text-white transition-colors">Волонтёрам</a></li>
+                        <li><a href="#about" class="hover:text-white transition-colors">О нас</a></li>
+                        <li><a href="#contacts" class="hover:text-white transition-colors">Контакты</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-roboto-condensed mb-4">Аккаунт</h4>
+                    <ul class="space-y-2 font-inter text-sm text-gray-400">
+                        <li><a href="/pages/login.html" class="hover:text-white transition-colors">Вход</a></li>
+                        <li><a href="/pages/register.html" class="hover:text-white transition-colors">Регистрация</a></li>
+                        <li><a href="password" class="hover:text-white transition-colors">Восстановление пароля</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-roboto-condensed mb-4">Контакты</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="vk" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-vk text-xl"></i>
+                        </a>
+                        <a href="instagram" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="tg" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-telegram text-xl"></i>
+                        </a>
+                    </div>
+                    <p class="font-inter text-gray-400 text-sm">info@runlife.ru</p>
+                    <p class="font-inter text-gray-400 text-sm">+7 (495) 123-45-67</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="font-inter text-gray-400 text-sm">
+                    © 2025 RunLife. Все права защищены.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальные окна -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-roboto-condensed text-gray-800 dark:text-white" id="modalTitle">Регистрация на забег</h3>
+                <button class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 text-xl" id="closeModal">&times;</button>
+            </div>
+            <p class="font-inter text-gray-600 dark:text-gray-300 mb-4">Для регистрации на забег необходимо войти в систему или создать аккаунт.</p>
+            <div class="flex space-x-4 mt-6">
+                <a href="login.html" class="btn-primary flex-1 text-center">Войти</a>
+                <a href="register.html" class="btn-secondary flex-1 text-center">Регистрация</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="volunteerModal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-roboto-condensed text-gray-800 dark:text-white">Заявка на волонтёрство</h3>
+                <button class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 text-xl close-modal">&times;</button>
+            </div>
+            <p class="font-inter text-gray-600 dark:text-gray-300 mb-4">Заполните форму, чтобы присоединиться к нашей команде волонтёров.</p>
+            <form class="space-y-4">
+                <div>
+                    <label class="block font-inter text-gray-700 dark:text-gray-300 mb-2 text-sm font-medium" for="volunteerName">Имя</label>
+                    <input type="text" id="volunteerName" class="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:border-blue-500 font-inter text-gray-900 dark:text-white" required>
+                </div>
+                <div>
+                    <label class="block font-inter text-gray-700 dark:text-gray-300 mb-2 text-sm font-medium" for="volunteerEmail">Email</label>
+                    <input type="email" id="volunteerEmail" class="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:border-blue-500 font-inter text-gray-900 dark:text-white" required>
+                </div>
+                <div>
+                    <label class="block font-inter text-gray-700 dark:text-gray-300 mb-2 text-sm font-medium" for="volunteerPhone">Телефон</label>
+                    <input type="tel" id="volunteerPhone" class="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:border-blue-500 font-inter text-gray-900 dark:text-white" required>
+                </div>
+                <div>
+                    <label class="block font-inter text-gray-700 dark:text-gray-300 mb-2 text-sm font-medium" for="volunteerRole">Предпочитаемая роль</label>
+                    <select id="volunteerRole" class="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:border-blue-500 font-inter text-gray-900 dark:text-white" required>
+                        <option value="">Выберите роль</option>
+                        <option value="registration">Регистрация участников</option>
+                        <option value="nutrition">Пункты питания</option>
+                        <option value="finish">Финишная зона</option>
+                        <option value="other">Другое</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary w-full mt-4">
+                    <i class="fas fa-paper-plane mr-2"></i> Отправить заявку
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="jobsModal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-roboto-condensed text-gray-800 dark:text-white">Вакансии в RunLife</h3>
+                <button class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 text-xl close-modal">&times;</button>
+            </div>
+            <p class="font-inter text-gray-600 dark:text-gray-300 mb-4">Присоединяйтесь к нашей команде! Отправьте своё резюме на <span class="text-blue-600 dark:text-blue-400">jobs@runlife.ru</span></p>
+            <div class="space-y-4">
+                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <h4 class="font-roboto-condensed text-lg text-gray-800 dark:text-white mb-2">Frontend-разработчик</h4>
+                    <p class="font-inter text-gray-600 dark:text-gray-300 text-sm mb-2">Разработка пользовательских интерфейсов для платформы RunLife</p>
+                    <div class="flex justify-between items-center">
+                        <span class="font-inter text-sm text-blue-600 dark:text-blue-400">Москва/удалённо</span>
+                        <span class="font-inter text-sm bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded">Открыта</span>
+                    </div>
+                </div>
+                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <h4 class="font-roboto-condensed text-lg text-gray-800 dark:text-white mb-2">Координатор мероприятий</h4>
+                    <p class="font-inter text-gray-600 dark:text-gray-300 text-sm mb-2">Организация и проведение беговых мероприятий</p>
+                    <div class="flex justify-between items-center">
+                        <span class="font-inter text-sm text-blue-600 dark:text-blue-400">Москва</span>
+                        <span class="font-inter text-sm bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 px-2 py-1 rounded">Рассматриваем</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript для управления темой и функциональностью -->
+    <script>
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            // Инициализация темы
+            initTheme();
+            
+            // Инициализация функциональности
+            initFunctionality();
+        });
+
+        // Функция инициализации темы
+        function initTheme() {
+            const themeToggle = document.getElementById('themeToggle');
+            const savedTheme = localStorage.getItem('theme') || 'dark'; // По умолчанию тёмная тема
+            
+            // Применяем сохраненную тему
+            applyTheme(savedTheme);
+            
+            // Устанавливаем обработчик переключения темы
+            themeToggle.addEventListener('click', toggleTheme);
+        }
+
+        // Функция переключения темы
+        function toggleTheme() {
+            const htmlElement = document.documentElement;
+            const currentTheme = htmlElement.classList.contains('dark') ? 'dark' : 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Функция применения темы
+        function applyTheme(theme) {
+            const htmlElement = document.documentElement;
+            const themeIcon = document.getElementById('themeIcon');
+            
+            if (theme === 'dark') {
+                htmlElement.classList.add('dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                htmlElement.classList.remove('dark');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        }
+
+        // Функция инициализации всей функциональности
+        function initFunctionality() {
+            // Фильтрация забегов
+            initRaceFilters();
+            
+            // Модальные окна
+            initModals();
+            
+            // Форма обратной связи
+            initContactForm();
+            
+            // Показать все забеги
+            initShowAllRaces();
+        }
+
+        // Функция фильтрации забегов
+        function initRaceFilters() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const raceCards = document.querySelectorAll('.race-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Убираем активный класс у всех кнопок
+                    filterButtons.forEach(btn => btn.classList.remove('active', 'bg-blue-600', 'text-white'));
+                    filterButtons.forEach(btn => {
+                        if (!btn.classList.contains('bg-blue-600')) {
+                            btn.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+                        }
+                    });
+                    
+                    // Добавляем активный класс текущей кнопке
+                    button.classList.add('active', 'bg-blue-600', 'text-white');
+                    button.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+                    
+                    const filter = button.getAttribute('data-filter');
+                    
+                    raceCards.forEach(card => {
+                        if (filter === 'all' || card.getAttribute('data-category').includes(filter)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        }
+
+        // Функция инициализации модальных окон
+        function initModals() {
+            const registerButtons = document.querySelectorAll('.register-btn');
+            const volunteerButton = document.getElementById('volunteerApplyBtn');
+            const jobsButton = document.getElementById('jobsBtn');
+            const closeButtons = document.querySelectorAll('.close-modal, #closeModal');
+            const modals = document.querySelectorAll('.modal');
+            
+            // Регистрация на забег
+            registerButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const raceName = button.getAttribute('data-race');
+                    document.getElementById('modalTitle').textContent = `Регистрация на "${raceName}"`;
+                    document.getElementById('registerModal').style.display = 'flex';
+                });
+            });
+            
+            // Волонтёрство
+            volunteerButton.addEventListener('click', () => {
+                document.getElementById('volunteerModal').style.display = 'flex';
+            });
+            
+            // Вакансии
+            jobsButton.addEventListener('click', () => {
+                document.getElementById('jobsModal').style.display = 'flex';
+            });
+            
+            // Закрытие модальных окон
+            closeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    modals.forEach(modal => {
+                        modal.style.display = 'none';
+                    });
+                });
+            });
+            
+            // Закрытие по клику вне модального окна
+            modals.forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // Функция инициализации формы обратной связи
+        function initContactForm() {
+            const contactForm = document.getElementById('contactForm');
+            
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Здесь должна быть логика отправки формы
+                alert('Сообщение отправлено! Мы свяжемся с вами в ближайшее время.');
+                contactForm.reset();
+            });
+        }
+
+        // Функция "Показать все забеги"
+        function initShowAllRaces() {
+            const showAllButton = document.getElementById('showAllRaces');
+            const raceCards = document.querySelectorAll('.race-card');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            showAllButton.addEventListener('click', () => {
+                // Показываем все карточки
+                raceCards.forEach(card => {
+                    card.style.display = 'block';
+                });
+                
+                // Активируем кнопку "Все"
+                filterButtons.forEach(btn => btn.classList.remove('active', 'bg-blue-600', 'text-white'));
+                filterButtons.forEach(btn => {
+                    if (!btn.classList.contains('bg-blue-600')) {
+                        btn.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+                    }
+                });
+                
+                filterButtons[0].classList.add('active', 'bg-blue-600', 'text-white');
+                filterButtons[0].classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+            });
+        }
+    </script>
+</body>
+</html>
