@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль - RunLife</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons via CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Roboto Condensed Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <style>
+        .font-roboto-condensed {
+            font-family: 'Roboto Condensed', sans-serif;
+        }
+        .font-inter {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        * {
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #1E3A8A, #3B82F6);
+            color: white;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1E40AF, #2563EB);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #60A5FA, #93C5FD);
+            color: white;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #3B82F6, #60A5FA);
+            transform: translateY(-1px);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #DC2626, #EF4444);
+            color: white;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #B91C1C, #DC2626);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+        
+        .dark .card {
+            background: #1F2937;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark .card:hover {
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-white">
+    <!-- Заголовок с навигацией -->
+    <header class="bg-white dark:bg-gray-800 shadow-lg border-b border-gray-200 dark:border-gray-700">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <i class="fas fa-running text-3xl text-blue-600 dark:text-blue-400"></i>
+                <a href="../index.html" class="text-2xl font-roboto-condensed text-gray-800 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors">RunLife</a>
+            </div>
+            <div class="flex items-center space-x-8">
+                <a href="../index.html" class="font-roboto-condensed text-lg text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Главная</a>
+                <a href="login.html" class="font-roboto-condensed text-lg text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Вход</a>
+                <a href="register.html" class="font-roboto-condensed text-lg text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Регистрация</a>
+                <!-- Кнопка переключения темы -->
+                <button id="themeToggle" class="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors" aria-label="Переключить тему">
+                    <i class="fas fa-sun" id="themeIcon"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-8">
+        <!-- Заголовок профиля -->
+        <div class="text-center mb-12">
+            <div class="w-32 h-32 mx-auto bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mb-6 shadow-lg">
+                <i class="fas fa-user text-5xl text-white"></i>
+            </div>
+            <h1 class="text-4xl font-roboto-condensed text-gray-800 dark:text-white mb-2">Иван Иванов</h1>
+            <p class="font-inter text-gray-600 dark:text-gray-300">ivan@example.com</p>
+        </div>
+
+        <!-- Основные разделы профиля -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+            <!-- История забегов -->
+            <article class="card">
+                <h2 class="text-2xl font-roboto-condensed text-gray-800 dark:text-white mb-6 flex items-center">
+                    <i class="fas fa-history mr-3 text-blue-600 dark:text-blue-400"></i> История забегов
+                </h2>
+                <div class="space-y-4">
+                    <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                        <h3 class="font-roboto-condensed text-lg text-gray-800 dark:text-white">Московский марафон</h3>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="font-inter text-sm text-gray-600 dark:text-gray-300">10 км • 15 сентября 2023</span>
+                            <span class="font-roboto-condensed text-red-600 dark:text-red-400 font-bold">45:23</span>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                        <h3 class="font-roboto-condensed text-lg text-gray-800 dark:text-white">Ночной забег</h3>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="font-inter text-sm text-gray-600 dark:text-gray-300">5 км • 22 августа 2023</span>
+                            <span class="font-roboto-condensed text-red-600 dark:text-red-400 font-bold">22:15</span>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                        <h3 class="font-roboto-condensed text-lg text-gray-800 dark:text-white">Весенний полумарафон</h3>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="font-inter text-sm text-gray-600 dark:text-gray-300">21 км • 12 мая 2023</span>
+                            <span class="font-roboto-condensed text-red-600 dark:text-red-400 font-bold">1:48:32</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-secondary w-full mt-6">
+                    <i class="fas fa-list mr-2"></i> Вся история
+                </button>
+            </article>
+
+            <!-- Мои регистрации -->
+            <article class="card">
+                <h2 class="text-2xl font-roboto-condensed text-gray-800 dark:text-white mb-6 flex items-center">
+                    <i class="fas fa-calendar-check mr-3 text-blue-600 dark:text-blue-400"></i> Мои регистрации
+                </h2>
+                <div class="space-y-4">
+                    <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                        <h3 class="font-roboto-condensed text-lg text-gray-800 dark:text-white">Осенний марафон</h3>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="font-inter text-sm text-gray-600 dark:text-gray-300">10 км • 20 октября 2023</span>
+                            <span class="status-badge bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">Подтверждено</span>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                        <h3 class="font-roboto-condensed text-lg text-gray-800 dark:text-white">Зимний забег</h3>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="font-inter text-sm text-gray-600 dark:text-gray-300">5 км • 15 декабря 2023</span>
+                            <span class="status-badge bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">Зарегистрирован</span>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                        <h3 class="font-roboto-condensed text-lg text-gray-800 dark:text-white">Новогодний забег</h3>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="font-inter text-sm text-gray-600 dark:text-gray-300">10 км • 1 января 2024</span>
+                            <span class="status-badge bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200">Ожидает оплаты</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-3 mt-6">
+                    <button class="btn-primary w-full">
+                        <i class="fas fa-plus mr-2"></i> Новая регистрация
+                    </button>
+                    <button class="btn-secondary w-full">
+                        <i class="fas fa-download mr-2"></i> Скачать все заявки
+                    </button>
+                    <button class="w-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 font-medium py-2 px-4 rounded transition-colors flex items-center justify-center">
+                        <i class="fas fa-print mr-2"></i> Распечатать
+                    </button>
+                </div>
+            </article>
+
+            <!-- Личные рекорды -->
+            <article class="card">
+                <h2 class="text-2xl font-roboto-condensed text-gray-800 dark:text-white mb-6 flex items-center">
+                    <i class="fas fa-trophy mr-3 text-blue-600 dark:text-blue-400"></i> Личные рекорды
+                </h2>
+                <div class="space-y-4">
+                    <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <span class="font-roboto-condensed text-lg text-gray-800 dark:text-white">5 км</span>
+                            <span class="font-roboto-condensed text-xl text-red-600 dark:text-red-400 font-bold">22:15</span>
+                        </div>
+                        <p class="font-inter text-sm text-gray-600 dark:text-gray-300 mt-1">Ночной забег • 22 августа 2023</p>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <span class="font-roboto-condensed text-lg text-gray-800 dark:text-white">10 км</span>
+                            <span class="font-roboto-condensed text-xl text-red-600 dark:text-red-400 font-bold">45:23</span>
+                        </div>
+                        <p class="font-inter text-sm text-gray-600 dark:text-gray-300 mt-1">Московский марафон • 15 сентября 2023</p>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <span class="font-roboto-condensed text-lg text-gray-800 dark:text-white">Полумарафон</span>
+                            <span class="font-roboto-condensed text-xl text-red-600 dark:text-red-400 font-bold">1:48:32</span>
+                        </div>
+                        <p class="font-inter text-sm text-gray-600 dark:text-gray-300 mt-1">Весенний полумарафон • 12 мая 2023</p>
+                    </div>
+                </div>
+                <button class="btn-secondary w-full mt-6">
+                    <i class="fas fa-chart-line mr-2"></i> Вся статистика
+                </button>
+            </article>
+        </div>
+
+        <!-- Дополнительная информация -->
+        <article class="card mb-8">
+            <h2 class="text-2xl font-roboto-condensed text-gray-800 dark:text-white mb-6">Статистика сезона</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-6 text-center">
+                <div>
+                    <div class="text-3xl font-bold text-blue-600 dark:text-blue-400">8</div>
+                    <p class="font-inter text-gray-600 dark:text-gray-300 mt-1">Забегов</p>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-green-600 dark:text-green-400">65</div>
+                    <p class="font-inter text-gray-600 dark:text-gray-300 mt-1">Километров</p>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-yellow-600 dark:text-yellow-400">3</div>
+                    <p class="font-inter text-gray-600 dark:text-gray-300 mt-1">Рекорда</p>
+                </div>
+            </div>
+        </article>
+
+        <!-- Форма редактирования профиля -->
+        <article class="card">
+            <h2 class="text-2xl font-roboto-condensed text-gray-800 dark:text-white mb-6">Редактирование профиля</h2>
+            <form class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block font-inter text-gray-700 dark:text-gray-300 mb-2 font-medium" for="profileUsername">Имя пользователя</label>
+                        <input type="text" id="profileUsername" placeholder="Введите ваше имя" 
+                            class="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 font-inter text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400">
+                    </div>
+                    <div>
+                        <label class="block font-inter text-gray-700 dark:text-gray-300 mb-2 font-medium" for="profileEmail">Email</label>
+                        <input type="email" id="profileEmail" placeholder="Введите ваш email" 
+                            class="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 font-inter text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-inter text-gray-700 dark:text-gray-300 mb-2 font-medium" for="profileBio">О себе</label>
+                    <textarea id="profileBio" placeholder="Расскажите о ваших спортивных целях и предпочтениях" 
+                        class="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 font-inter text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 h-32"></textarea>
+                </div>
+                <div class="flex gap-4 pt-4">
+                    <button type="button" class="btn-primary flex-1">
+                        <i class="fas fa-save mr-2"></i> Сохранить профиль
+                    </button>
+                    <button type="button" class="btn-danger flex-1">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Выйти
+                    </button>
+                </div>
+            </form>
+        </article>
+    </main>
+
+    <!-- Подвал сайта -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-8 mt-12">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                    <i class="fas fa-running text-xl text-blue-600 dark:text-blue-400"></i>
+                    <span class="font-roboto-condensed text-gray-800 dark:text-white">RunLife</span>
+                </div>
+                <div class="text-sm text-gray-600 dark:text-gray-300 mb-4 md:mb-0">
+                    <p>&copy; 2023 RunLife. Все права защищены.</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                        <i class="fab fa-vk text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                        <i class="fab fa-telegram text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript для управления темой -->
+    <script>
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            // Инициализация темы
+            initTheme();
+            
+            // Загрузка данных профиля
+            loadProfileData();
+        });
+
+        // Функция инициализации темы
+        function initTheme() {
+            const themeToggle = document.getElementById('themeToggle');
+            const savedTheme = localStorage.getItem('theme') || 'dark'; // По умолчанию тёмная тема
+            
+            // Применяем сохраненную тему
+            applyTheme(savedTheme);
+            
+            // Устанавливаем обработчик переключения темы
+            themeToggle.addEventListener('click', toggleTheme);
+        }
+
+        // Функция переключения темы
+        function toggleTheme() {
+            const htmlElement = document.documentElement;
+            const currentTheme = htmlElement.classList.contains('dark') ? 'dark' : 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Функция применения темы
+        function applyTheme(theme) {
+            const htmlElement = document.documentElement;
+            const themeIcon = document.getElementById('themeIcon');
+            
+            if (theme === 'dark') {
+                htmlElement.classList.add('dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                htmlElement.classList.remove('dark');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        }
+
+        // Функция загрузки данных профиля
+        function loadProfileData() {
+            // Получаем сохраненные данные профиля или используем значения по умолчанию
+            const userProfile = JSON.parse(localStorage.getItem('userProfile')) || {
+                username: 'Иван Иванов',
+                email: 'ivan@example.com',
+                bio: 'Любитель бега, стремящийся к новым достижениям. Участвую в забегах с 2022 года.',
+                joinDate: '15 марта 2022'
+            };
+
+            // Заполняем форму сохраненными данными
+            document.getElementById('profileUsername').value = userProfile.username || '';
+            document.getElementById('profileEmail').value = userProfile.email || '';
+            document.getElementById('profileBio').value = userProfile.bio || '';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Авторизация - RunLife</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons via CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Roboto Condensed Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .font-roboto-condensed {
+            font-family: 'Roboto Condensed', sans-serif;
+        }
+        .font-inter {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Плавные переходы для всех элементов */
+        * {
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        /* Кастомные стили для формы */
+        .form-input {
+            transition: all 0.3s;
+        }
+        
+        .form-input:focus {
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.3);
+        }
+        
+        .dark .form-input:focus {
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.5);
+        }
+
+        /* Центрирование и компактный вид */
+        .login-card {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
+    <div class="w-full login-card">
+        <!-- Карточка авторизации -->
+        <main class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
+            <!-- Упрощенный заголовок без баннера -->
+            <div class="p-6 text-center border-b border-gray-200 dark:border-gray-700">
+                <div class="flex items-center justify-center mb-2">
+                    <i class="fas fa-running text-2xl text-blue-600 dark:text-blue-400 mr-2"></i>
+                    <h1 class="text-2xl font-roboto-condensed text-gray-800 dark:text-white">RunLife</h1>
+                </div>
+                <p class="text-sm font-inter text-gray-600 dark:text-gray-300">Войдите в свой аккаунт</p>
+            </div>
+            
+            <!-- Форма авторизации -->
+            <form class="p-6 space-y-4">
+                <!-- Поле email -->
+                <div>
+                    <label for="email" class="block font-inter text-gray-700 dark:text-gray-300 mb-2 text-sm font-medium">
+                        <i class="fas fa-envelope mr-2 text-blue-500"></i>Email
+                    </label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        required
+                        class="w-full form-input px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:border-blue-500 font-inter text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 text-sm"
+                        placeholder="your@email.com"
+                    >
+                </div>
+                
+                <!-- Поле пароля -->
+                <div>
+                    <label for="password" class="block font-inter text-gray-700 dark:text-gray-300 mb-2 text-sm font-medium">
+                        <i class="fas fa-lock mr-2 text-blue-500"></i>Пароль
+                    </label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        required 
+                        minlength="6"
+                        class="w-full form-input px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:border-blue-500 font-inter text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 text-sm"
+                        placeholder="••••••••"
+                    >
+                </div>
+                
+                <!-- Дополнительные опции -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input 
+                            type="checkbox" 
+                            id="remember" 
+                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded bg-gray-50 dark:bg-gray-700"
+                        >
+                        <label for="remember" class="ml-2 block font-inter text-xs text-gray-700 dark:text-gray-300">
+                            Запомнить меня
+                        </label>
+                    </div>
+                    <a href="#" class="font-inter text-xs text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">
+                        Забыли пароль?
+                    </a>
+                </div>
+                
+                <!-- Кнопка входа -->
+                <button 
+                    type="submit" 
+                    class="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white font-medium py-2 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 text-sm"
+                >
+                    <i class="fas fa-sign-in-alt mr-2"></i> Войти
+                </button>
+                
+                <!-- Разделитель -->
+                <div class="relative flex items-center pt-2">
+                    <div class="flex-grow border-t border-gray-300 dark:border-gray-600"></div>
+                    <span class="flex-shrink mx-3 font-inter text-gray-500 dark:text-gray-400 text-xs">или</span>
+                    <div class="flex-grow border-t border-gray-300 dark:border-gray-600"></div>
+                </div>
+                
+                <!-- Кнопка регистрации -->
+                <a 
+                    href="register.html" 
+                    class="w-full inline-flex justify-center items-center border border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm"
+                >
+                    <i class="fas fa-user-plus mr-2"></i> Создать аккаунт
+                </a>
+            </form>
+            
+            <footer class="bg-gray-50 dark:bg-gray-700 px-6 py-3 border-t border-gray-200 dark:border-gray-600">
+                <p class="text-center font-inter text-xs text-gray-600 dark:text-gray-400">
+                    © 2023 RunLife. Все права защищены.
+                </p>
+            </footer>
+        </main>
+        
+        <!-- Уведомление об успешном входе -->
+        <div id="successNotification" class="hidden fixed top-4 right-4 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-3 flex items-center space-x-2 border-l-4 border-green-500">
+            <i class="fas fa-check-circle text-green-500 text-lg"></i>
+            <p class="font-inter text-gray-900 dark:text-white text-sm">Успешный вход!</p>
+        </div>
+    </div>
+
+    <!-- JavaScript для управления темой и формой -->
+    <script>
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            // Инициализация темы
+            initTheme();
+            
+            // Загрузка сохраненных данных, если есть
+            loadSavedCredentials();
+            
+            // Настройка обработчика формы
+            setupFormHandler();
+        });
+
+        // Функция инициализации темы
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            
+            // Применяем сохраненную тему
+            applyTheme(savedTheme);
+        }
+
+        // Функция применения темы
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }
+
+        // Функция загрузки сохраненных учетных данных
+        function loadSavedCredentials() {
+            const savedCredentials = localStorage.getItem('runlifeCredentials');
+            if (savedCredentials) {
+                const credentials = JSON.parse(savedCredentials);
+                document.getElementById('email').value = credentials.email || '';
+                document.getElementById('password').value = credentials.password || '';
+                document.getElementById('remember').checked = true;
+            }
+        }
+
+        // Функция настройки обработчика формы
+        function setupFormHandler() {
+            const form = document.querySelector('form');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('email');
+                const password = document.getElementById('password');
+                const rememberMe = document.getElementById('remember');
+                let isValid = true;
+
+                // Валидация email адреса
+                if (!email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                    isValid = false;
+                    email.classList.add('border-red-500');
+                    email.classList.remove('border-gray-300', 'dark:border-gray-600');
+                } else {
+                    email.classList.remove('border-red-500');
+                    email.classList.add('border-gray-300', 'dark:border-gray-600');
+                }
+
+                // Валидация пароля
+                if (password.value.length < 6) {
+                    isValid = false;
+                    password.classList.add('border-red-500');
+                    password.classList.remove('border-gray-300', 'dark:border-gray-600');
+                } else {
+                    password.classList.remove('border-red-500');
+                    password.classList.add('border-gray-300', 'dark:border-gray-600');
+                }
+
+                if (isValid) {
+                    // Сохранение данных, если отмечено "Запомнить меня"
+                    if (rememberMe.checked) {
+                        saveCredentials(email.value, password.value);
+                    } else {
+                        clearSavedCredentials();
+                    }
+                    
+                    // Отображение уведомления об успешном входе
+                    showSuccessNotification();
+                    
+                    // Перенаправление на страницу профиля через 2 секунды
+                    setTimeout(() => {
+                        window.location.href = 'profile.html';
+                    }, 2000);
+                }
+            });
+        }
+
+        // Функция сохранения учетных данных
+        function saveCredentials(email, password) {
+            const credentials = {
+                email: email,
+                password: password
+            };
+            localStorage.setItem('runlifeCredentials', JSON.stringify(credentials));
+        }
+
+        // Функция очистки сохраненных учетных данных
+        function clearSavedCredentials() {
+            localStorage.removeItem('runlifeCredentials');
+        }
+
+        // Функция показа уведомления об успехе
+        function showSuccessNotification() {
+            const notification = document.getElementById('successNotification');
+            notification.classList.remove('hidden');
+            
+            // Автоматическое скрытие уведомления через 5 секунд
+            setTimeout(() => {
+                notification.classList.add('hidden');
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
